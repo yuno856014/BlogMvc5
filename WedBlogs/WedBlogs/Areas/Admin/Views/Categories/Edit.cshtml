@@ -1,0 +1,100 @@
+﻿@model WedBlogs.Models.Category
+
+@{
+    ViewData["Title"] = "CHỈNH SỬA DANH MỤC";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>CHỈNH SỬA DANH MỤC</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li><a href="/Admin">Dashboard</a></li>
+                    <li><a asp-area="Admin" asp-controller="Categories" asp-action="Index">QUẢN LÝ DANH MỤC</a></li>
+                    <li><a asp-area="Admin" asp-controller="Categories" asp-action="Edit">CHỈNH SỬA DANH MỤC</a></li>
+                    <li><a>@Model.CatName</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <form asp-area="Admin" asp-action="Edit" asp-controller="Categories" asp-route-id="@Model.CatId" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="CatId" />
+        <input type="hidden" asp-for="Alias" />
+        <input type="hidden" asp-for="Thumb" />
+        <input type="hidden" asp-for="Icon" />
+        <input type="hidden" asp-for="Cover" />
+        <input type="hidden" asp-for="Published" />
+        <div class="form-group col-sm-6">
+            <label class="control-label">Tên Danh Mục:</label>
+            <input asp-for="CatName" class="form-control" />
+            <span asp-validation-for="CatName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">Danh Mục Cha:</label>
+            <select class="form-control" asp-for="Parents" asp-items="@ViewBag.DanhMucGoc" required>
+                <option value="0" selected>Danh Mục Gốc</option>
+            </select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">Sắp xếp:</label>
+            <input asp-for="Ordering" type="number" value="0" class="form-control" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> Ảnh đại diện:</label>
+            <input asp-for="Thumb" name="fThumb" type="file" class="form-control-file" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">Icon:</label>
+            <input asp-for="Icon" name="fIcon" type="file" class="form-control-file" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">Cover:</label>
+            <input asp-for="Cover" type="file" name="fCover" class="form-control-file" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label asp-for="Levels" class="control-label"></label>
+            <input asp-for="Levels" class="form-control" />
+            <span asp-validation-for="Levels" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> Mô Tả:</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> Tiêu đề:</label>
+            <input asp-for="Title" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> Metakey:</label>
+            <input asp-for="MetaKey" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> Metakey:</label>
+            <input asp-for="MetaKey" type="text" class="form-control" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label"> MetaDesc:</label>
+            <input asp-for="MetaDesc" type="text" class="form-control" />
+        </div>
+        <div class="text-left col-sm-6">
+            <button type="submit" class="btn btn-success btn-sm">
+                <i class="fa fa-check"></i> Submit
+            </button>
+            <button type="reset" class="btn btn-secondary btn-sm">
+                <a asp-action="Index"><i class="fa fa-backward"></i> Back to List</a>
+            </button>
+        </div>
+    </form>
+</div>      
+

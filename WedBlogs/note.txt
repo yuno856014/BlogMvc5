@@ -2,3 +2,43 @@ Scaffold-DbContext "Data Source=BuuNguyen;Initial Catalog=DBLogs;Integrated Secu
 
 Ghi Đè
 Scaffold-DbContext "Data Source=BuuNguyen;Initial Catalog=Employee.AIT;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -t Roles,Accounts -f
+
+    public async Task<IActionResult> Login(Login model, string returnUrl = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Account kh = _context.Accounts.Include(p => p.Role).SingleOrDefault(p => p.Email.ToLower() == model.Email.ToLower().Trim());
+                    if (kh == null)
+                    {
+                        ViewBag.Error = "Thông Tin đăng nhập không chính xác!";
+                        return View(model);
+                    }
+                    string pass = (model.Password.Trim() + kh.Salt.Trim());
+                    if (kh.Password.Trim() != pass)
+                    {
+                        ViewBag.Error = "Thông Tin đăng nhập không chính xác!";
+                        return View(model);
+                    }
+                    kh.LastLogin = DateTime.Now;
+                    _context.Update(kh);
+                    await _context.SaveChangesAsync();
+
+                    var accountId = HttpContext.Session.GetString("AccountId");
+                    HttpContext.Session.SetString("AccountId", kh.AccountId.ToString());
+                    return RedirectToAction("Index", "DashBoard");
+
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Login", "Accounts");
+            }
+
+            return RedirectToAction("Login", "Accounts");
+        }
+        public IActionResult Signout()
+        {
+            return RedirectToAction("Login", "Account");
+        }

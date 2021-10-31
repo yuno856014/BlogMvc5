@@ -1,1 +1,4 @@
 Scaffold-DbContext "Data Source=BuuNguyen;Initial Catalog=DBLogs;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Ghi Đè
+Scaffold-DbContext "Data Source=BuuNguyen;Initial Catalog=Employee.AIT;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -t Roles,Accounts -f
